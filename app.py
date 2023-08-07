@@ -46,19 +46,6 @@ def run_gpt(
     output_content = response.choices[0]["message"]["content"].strip()
     return output_content
 
-
-# audio player
-def show_audio_player(output_content_text: str) -> None:
-    sound_file = BytesIO()
-    try:
-        tts = gTTS(text=output_content_text, lang="ja")
-        tts.write_to_fp(sound_file)
-        st.write(st.session_state.locale.stt_placeholder)
-        st.audio(sound_file)
-    except gTTSError as err:
-        st.error(err)
-
-
 # Settings @sidebar
 st.sidebar.title('Settings')
 openai.api_key = st.sidebar.text_input("OpenAI key")
@@ -93,7 +80,6 @@ if st.button('Start!'):
         )
 
         output_content.write(output_content_text)
-        st.audio(sound, format="audio/wav", start_time=0, sample_rate=None)
         
     else:
         warning_text.write("参加者の名前を入力してください。")
